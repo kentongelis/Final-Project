@@ -73,8 +73,6 @@ def create_or_sign():
     if si == "create":
         create_account()
     elif si == "sign in":
-        f=open(database,'r')
-        print(f.read())
         return
     else:
         print('Please answer "create" or "sign in"!')
