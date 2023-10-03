@@ -33,25 +33,25 @@ def check_password():
     """
     passw = input("Please enter your password > ")
     with open(database,'r') as infile:
-        psplit = infile.read().split(',')
-        if passw in psplit:
-            bank_info(passw)
-        else:
-            print("That password is incorrect\nPlease try again!")
-            check_password()
+        for line in infile:
+            psplit = line.strip().split(',')
+            if passw == psplit[1]:
+                return bank_info(passw)
+        print("Username is not in our system\nPlease try again!")
+        return check_password()
     
 def check_username():
     """
-    Function that checks if the username is in te database
+    Function that checks if the username is in the database
     """
     uname = input("Please enter your username > ")
     with open(database,'r') as infile:
-        usplit = infile.read().split(',')
-        if uname in usplit:
-            return 
-        else:
-            print("Username is not in our system\nPlease try again!")
-            check_username()
+        for line in infile:
+            usplit = line.strip().split(',')
+            if uname == usplit[0]:
+                return True
+        print("Username is not in our system\nPlease try again!")
+        return check_username()
 
 def create_account():
     """
@@ -88,8 +88,9 @@ def bank():
     user = False
     while user is False:
         create_or_sign()   
-        check_username()
-        check_password()
+        cu = check_username()
+        if cu == True:
+            check_password()
         aa=another_account()
         if aa is False:
             break
